@@ -39,13 +39,12 @@ class MirAIeBroker:
         func(parsed)
 
     async def connect(self, username: str, access_token: User, get_token):
-        # Set on_token_expire callback
         password = access_token
 
         context = None
 
         if self.use_ssl:
-            context = ssl.create_default_context(cafile=certifi.where())
+            context = await asyncio.to_thread(ssl.create_default_context, cafile=certifi.where())
 
         while True:
             try:
